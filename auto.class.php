@@ -10,36 +10,45 @@ interface AutoInterface {
 }
 
 abstract class Auto implements AutoInterface {
-    public $soundEngine;  
+    public $soundEngine;  // звук запуска двигателя
     public $direct;  // направление движения
-    public $currentSpeed;   // скорость
+    public $currentSpeed;   // текущая скорость
 
+    // Поехали!
     public function drive($speed){
         $this->currentSpeed = $speed;
     }
-
+    // Остановка
     public function stop(){
         $this->currentSpeed = 0;
     }
+    // Поворот налево
     public function turnLeft(){
         $this->direct = 'Left';
     }
+    // Поворот направо
     public function turnRight(){
         $this->direct = 'Right';
     }
+    // Гудок
     public function beep(){
         echo 'Beep<br>';
     }
+    // Отобразить состояние
     public function showState(){
         echo '<br>';
         echo '<b>Speed:</b> '.$this->currentSpeed.'<br>';
         echo '<b>Direction:</b> '.$this->direct.'<br>';
     }
+    // Завести
     abstract public function startEngine ();
+    // Погрузка
     abstract public function loading($count);
+    // Разгрузка
     abstract public function unloading();
 }
 
+// Легковушка
 class Car extends Auto {
     
     const passengerCapacity = 4;
@@ -51,8 +60,13 @@ class Car extends Auto {
         $this->soundEngine =  'вжжж';
     }
 
-    public function startEngine (){
-        echo $this->soundEngine.'<br>';
+    // Спцифичное действие - переворачивание
+    public function __invoke(){
+        echo 'Ой бл...!';
+    }
+
+        public function startEngine (){
+        echo $this->soundEngine.' Домчу куда скажите<br>';
     }
     
     public function loading($count){
@@ -68,6 +82,7 @@ class Car extends Auto {
     }
 }
 
+// Грузовик
 class Truck extends Auto {
     const loadCapacity = 10;  // грузоподъемность в тоннах
     
@@ -78,8 +93,13 @@ class Truck extends Auto {
         $this->soundEngine = 'гржжж';
     }
 
+    // Спцифичное действие - отвал кузова
+    public function __invoke(){
+        echo 'Шшшшшшш.... Плюх!';
+        }
+
     public function startEngine (){
-        echo $this->soundEngine.'<br>';
+        echo $this->soundEngine.' Грузите полный кузов<br>';
     }
 
     public function loading($count){
@@ -95,6 +115,7 @@ class Truck extends Auto {
     }
 }
 
+// Бульдозер
 class Bulldozer extends Auto {
 
     public function __construct()
@@ -102,8 +123,13 @@ class Bulldozer extends Auto {
         $this->soundEngine = 'Чух-чух';
     }
 
+    // Спцифичное действие - опускание ковша
+    public function __invoke(){
+        echo 'Шлёпс!';
+        }
+    
     public function startEngine (){
-        echo $this->soundEngine.'<br>';
+        echo $this->soundEngine.' Разойдись! Бульдозер гуляет<br>';
     }
     public function loading($count){
         return;
@@ -114,18 +140,22 @@ class Bulldozer extends Auto {
     }
 }
 
+// Танк
 class Panzer extends Auto {
     const maxAmmunition = 20;
     
     public $countAmmunition;
     
-    public function __construct()
-    {
+    public function __construct(){
         $this->soundEngine = 'РРРРРР';
+    }
+    // Спцифичное действие - выстрел
+    public function __invoke(){
+    echo 'Ба-Бах... Точно в цель!';
     }
 
     public function startEngine (){
-        echo $this->soundEngine.'<br>';
+        echo $this->soundEngine.' Ща как прицелюсь!<br>';
     }
 
     public function loading($count){
@@ -148,5 +178,6 @@ function showAuto(Auto $auto){
     $auto->drive(50);
     $auto->turnLeft();
     $auto->showState();
-
+    // специфичное действие
+    $auto();
 }

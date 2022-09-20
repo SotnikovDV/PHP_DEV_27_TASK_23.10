@@ -12,14 +12,22 @@
     <p>
 <?php
 include_once ('auto.class.php');
+
 echo '<h2>Легковушка</h2>';
 $car = new Car();
 showAuto($car);
 echo '<br>';
+
 echo '<h2>Грузовик</h2>';
 $truck = new Truck();
 showAuto($truck);
 echo '<br>';
+
+echo '<h2>Бульдозер</h2>';
+$bulldozer = new Bulldozer();
+showAuto($bulldozer);
+echo '<br>';
+
 echo '<h2>Танк</h2>';
 $panzer = new Panzer();
 showAuto($panzer);
